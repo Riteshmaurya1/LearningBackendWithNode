@@ -1,0 +1,22 @@
+
+    System Information Report
+
+    Genetated at 19/10/2025, 2:13:50 pm
+
+    ===========================================
+    OS Type: Windows_NT
+    OS Plateform: win32
+    OS Arch: x64
+    Hostname: DESKTOP-3B116UF
+    Home dir: C:\Users\rites
+
+    Total Memory: 8098.82
+    Free Memory: 2222.79
+    System uptime: 1390.31
+
+    CPU Info:
+ Core 1 " Intel(R) Core(TM) i3-6006U CPU @ 2.00GHz,
+ Core 2 " Intel(R) Core(TM) i3-6006U CPU @ 2.00GHz,
+ Core 3 " Intel(R) Core(TM) i3-6006U CPU @ 2.00GHz,
+ Core 4 " Intel(R) Core(TM) i3-6006U CPU @ 2.00GHz
+    
