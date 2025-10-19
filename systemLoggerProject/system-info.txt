@@ -19,4 +19,3 @@
  Core 2 " Intel(R) Core(TM) i3-6006U CPU @ 2.00GHz,
  Core 3 " Intel(R) Core(TM) i3-6006U CPU @ 2.00GHz,
  Core 4 " Intel(R) Core(TM) i3-6006U CPU @ 2.00GHz
-    
