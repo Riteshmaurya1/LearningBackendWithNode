@@ -1,0 +1,14 @@
+# .github/FUNDING.yml
+github: [riteshmaurya]  # up to 4 GitHub Sponsors usernames
+patreon: ritesh_codes    # single Patreon username
+open_collective: ritesh-oss
+ko_fi: riteshdev
+tidelift: npm/your-package
+community_bridge: cloud-foundry
+liberapay: ritesh_dev
+issuehunt: ritesh_dev
+lfx_crowdfunding: cloud-foundry
+polar: ritesh
+buy_me_a_coffee: riteshmaurya
+thanks_dev: ritesh
+custom: ['https://linktr.ee/ritesh', 'https://buymeacoffee.com/ritesh']
