@@ -15,7 +15,7 @@ app.post("/categories", (req, res) => {
   res.status(201).send("A new category has been created.");
 });
 
-app.all(/.*/, (req, res) => {
+app.use(/.*/, (req, res) => {
   res.status(404).send("<h1>404 - Page Not Found</h1>");
 });
 
