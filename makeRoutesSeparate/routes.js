@@ -34,12 +34,11 @@ function requestHandler(req, res) {
     });
   }
 }
-function printName(){
+function printName() {
   console.log("-:- this is the printName function -:-");
-};
+}
 
 // module.exports = requestHandler;
 // module.exports = { requestHandler, printName };
 module.exports.normalRoutes = requestHandler;
 module.exports.PrintFunc = printName;
-

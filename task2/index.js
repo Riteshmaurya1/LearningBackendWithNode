@@ -20,7 +20,7 @@ const server = http.createServer((req, res) => {
     res.setHeader("Content-Type", "text/html");
     let dataChunks = [];
     req.on("data", (chunks) => {
-    //   console.log(chunks);
+      //   console.log(chunks);
       dataChunks.push(chunks);
     });
     req.on("end", () => {
