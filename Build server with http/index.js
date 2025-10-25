@@ -3,15 +3,16 @@
 const http = require("http");
 
 let server = http.createServer(function (req, res) {
-    if(req.url == '/profile' && req.method=="GET"){
-        res.end("This is ritesh maurya");
-        return;
-    }
-    if(req.url == '/address' && req.method == "POST"){
-        res.end("Nighasan Lakhimpur-Kheri");
-        return;
-    }
-  res.end("Hello World!...");
+  if (req.url == "/home") {
+    res.end("Welcome home");
+    return;
+  } else if (req.url == "/about") {
+    res.end("Welcome to About Us");
+    return;
+  } else if (req.url == "/node") res.end("Welcome to my Node Js project");
+  else {
+    res.end("Page Not Found.");
+  }
 });
 
 server.listen(3000, function () {
