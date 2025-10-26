@@ -1,0 +1,15 @@
+{
+  "name": "task3",
+  "version": "1.0.0",
+  "description": "This is related to the task three",
+  "license": "ISC",
+  "author": "Sharpener",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
