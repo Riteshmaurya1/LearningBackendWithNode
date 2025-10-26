@@ -1,7 +1,7 @@
 
     System Information Report
 
-    Genetated at 19/10/2025, 2:13:50 pm
+    Genetated at 26/10/2025, 3:06:42 pm
 
     ===========================================
     OS Type: Windows_NT
@@ -11,8 +11,8 @@
     Home dir: C:\Users\rites
 
     Total Memory: 8098.82
-    Free Memory: 2222.79
-    System uptime: 1390.31
+    Free Memory: 970.54
+    System uptime: 11523.11
 
     CPU Info:
  Core 1 " Intel(R) Core(TM) i3-6006U CPU @ 2.00GHz,
