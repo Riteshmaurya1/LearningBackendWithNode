@@ -2,18 +2,30 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Page</title>
+    <meta charset="UTF-8" />
+    <title>Add Product</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
-    <form action="/products" method="post">
+    <form id="product-form">
         <label for="product">Product Name</label>
-        <input type="text" id="product" name="productName" placeholder="Enter product name" required />
+        <input type="text" id="product" name="productName" required />
         <button type="submit">Add Product</button>
     </form>
 
+    <script>
+        const form = document.getElementById("product-form");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const productName = document.getElementById("product").value.trim();
+            try {
+                const res = await axios.post("/products", { productName });
+            } catch (err) {
+                console.log(err);
+            }
+        });
+    </script>
 </body>
 
 </html>
