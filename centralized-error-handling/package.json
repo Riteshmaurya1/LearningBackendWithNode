@@ -1,0 +1,15 @@
+{
+  "name": "centralized-error-handling",
+  "version": "1.0.0",
+  "description": "In this chapter we will learn tthe centralized error handling and route to route error handling.",
+  "license": "ISC",
+  "author": "Ritesh Maurya",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
