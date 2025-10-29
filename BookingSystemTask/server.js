@@ -17,10 +17,10 @@ connection.connect((err) => {
   console.log("Connected Successfully!.");
 
   const QueryCreation = `
-  // create table Users(id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(255),email VARCHAR(255));
-  // create table Buses(id INT AUTO_INCREMENT PRIMARY KEY,busNumber VARCHAR(255),totalSeats INT,availableSeats INT);
-  // create table Bookings(id INT AUTO_INCREMENT PRIMARY KEY,seatNumber INT);
-  // create table Payments(id INT AUTO_INCREMENT PRIMARY KEY,amountPaid INT, paymentStatus VARCHAR(255));
+  create table Users(id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(255),email VARCHAR(255));
+  create table Buses(id INT AUTO_INCREMENT PRIMARY KEY,busNumber VARCHAR(255),totalSeats INT,availableSeats INT);
+  create table Bookings(id INT AUTO_INCREMENT PRIMARY KEY,seatNumber INT);
+  create table Payments(id INT AUTO_INCREMENT PRIMARY KEY,amountPaid INT, paymentStatus VARCHAR(255));
   `;
   
   connection.execute(QueryCreation, (err) => {
