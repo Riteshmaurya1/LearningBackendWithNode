@@ -1,86 +1,76 @@
 const db = require("../utils/db-connection");
-const addEntries = (req, res) => {
+const Student = require("../Models/student");
+const addEntries = async (req, res) => {
   const { name, email } = req.body;
-  const insertQuery = `INSERT INTO students (name,email) VALUES (?,?)`;
 
-  db.execute(insertQuery, [name, email], (err) => {
-    if (err) {
-      console.log(err);
-      res.status(500).json({
-        message: err.message,
-        success: false,
-      });
-      db.end();
-      return;
-    }
-    console.log("Values has been inserted.");
+  try {
+    const student = await Student.create({
+      email: email,
+      name: name,
+    });
     res.status(201).json({
       message: `Student with name ${name} successfully added.`,
       success: true,
     });
-  });
-};
-
-const updateEntry = (req, res) => {
-  const { id } = req.params;
-  const { name, email } = req.body;
-  //   const name = "Sharpener";
-
-  const updateQuery = `UPDATE students SET name = ?,email = ? WHERE id = ?`;
-
-  db.execute(updateQuery, [name, email, id], (err, result) => {
-    if (err) {
-      console.log(err.message);
-      res.status(500).json({
-        message: err.message,
-        success: false,
-      });
-      db.end();
-      return;
-    }
-    if (result.affectedRows === 0) {
-      res.status(404).json({
-        message: "Student not found",
-        success: false,
-      });
-      return;
-    }
-    res.status(200).json({
-      message: "Student is updated successfully.",
-      success: true,
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+      success: false,
     });
-  });
+  }
 };
 
-const deleteEntry = (req, res) => {
-  const { id } = req.params;
+// const updateEntry = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { name, email } = req.body;
 
-  const deleteQuery = `DELETE FROM students WHERE id = ?`;
-  db.execute(deleteQuery, [id], (err, result) => {
-    if (err) {
-      console.log(err.message);
-      res.status(500).json({
-        message: err.message,
-        success: false,
-      });
-      db.end();
-      return;
-    }
-    if (result.affectedRows === 0) {
-      res.status(404).json({
-        message: "Student not found",
-        success: false,
-      });
-    }
-    res.status(200).json({
-      message: `Student with ${id} is deleted.`,
-      success: true,
-    });
-  });
-};
+//     const student = await Student.findByPk(id);
+//     if (!student) {
+//       res.status(404).json({
+//         message: "User Not Found",
+//         status: false,
+//       });
+//     }
+//     student.name = name;
+//     student.email = email;
+//     await student.save();
+//   } catch (err) {
+//     res.status(500).json({
+//       message: err.message,
+//       status: false,
+//     });
+//   }
+// };
+
+// const deleteEntry = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const student = await Student.destroy({
+//       where: {
+//         id: id,
+//       },
+//     });
+//     if (!student) {
+//       res.status(404).json({
+//         message: "User is not found.",
+//         status: false,
+//       });
+//     }
+//     res.status(200).json({
+//       message: `User with id ${id} is deleted`,
+//       status: false,
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       message: err.message,
+//       status: false,
+//     });
+//   }
+// };
 
 module.exports = {
   addEntries,
-  updateEntry,
-  deleteEntry,
+  // updateEntry,
+  // deleteEntry,
 };
