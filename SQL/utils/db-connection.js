@@ -1,33 +1,51 @@
-const mysql = require("mysql2");
+const { Sequelize } = require("sequelize");
 
-// create mysql connection
-const connection = mysql.createConnection({
+const sequelize = new Sequelize("testdb", "root", "Mysql@123", {
   host: "localhost",
-  user: "root",
-  password: "Mysql@123",
-  database: "testdb",
+  dialect: "mysql",
 });
-connection.connect((err) => {
-  if (err) {
+
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Creation of database has been created.");
+  } catch (err) {
     console.log(err);
-    return;
   }
-  console.log("Connected Successfully!.");
+})();
 
-  // const QueryCreation = `create table Students(
-  // id INT AUTO_INCREMENT PRIMARY KEY,
-  // name VARCHAR(255),
-  // email VARCHAR(255)
-  // )`;
+module.exports = sequelize;
 
-  // connection.execute(QueryCreation, (err) => {
-  //   if (err) {
-  //     console.log(err);
-  //     connection.end();
-  //     return;
-  //   }
-  //   console.log("Table is created!.");
-  // });
-});
+// const mysql = require("mysql2");
 
-module.exports = connection;
+// // create mysql connection
+// const connection = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "Mysql@123",
+//   database: "testdb",
+// });
+// connection.connect((err) => {
+//   if (err) {
+//     console.log(err);
+//     return;
+//   }
+//   console.log("Connected Successfully!.");
+
+//   // const QueryCreation = `create table Students(
+//   // id INT AUTO_INCREMENT PRIMARY KEY,
+//   // name VARCHAR(255),
+//   // email VARCHAR(255)
+//   // )`;
+
+//   // connection.execute(QueryCreation, (err) => {
+//   //   if (err) {
+//   //     console.log(err);
+//   //     connection.end();
+//   //     return;
+//   //   }
+//   //   console.log("Table is created!.");
+//   // });
+// });
+
+// module.exports = connection;
