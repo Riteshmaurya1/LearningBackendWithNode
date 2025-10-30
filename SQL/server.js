@@ -4,7 +4,7 @@ const db = require("./utils/db-connection");
 const studentRouter = require("./Routes/studentRouter");
 
 // adding student table
-const studentModel = require("./Models/student");
+require("./Models");
 
 // middleware for json data
 app.use(express.json());
