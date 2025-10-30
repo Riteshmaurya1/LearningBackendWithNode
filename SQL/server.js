@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("./utils/db-connection");
 const studentRouter = require("./Routes/studentRouter");
+const courseRouter = require("./Routes/courseRouter");
 
 // adding student table
 require("./Models");
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/students", studentRouter);
+app.use("/courses", courseRouter);
 
 db.sync({ force: false })
   .then(() => {
