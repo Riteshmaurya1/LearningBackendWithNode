@@ -1,52 +1,53 @@
 const db = require("../Config/db-connection");
-const addBus = (req, res) => {
-  const { busNumber, totalSeats, availableSeats } = req.body;
+const Bus = require("../Model/buses");
+const { Op } = require("sequelize");
 
-  const addUserQuery = `INSERT INTO buses (busNumber,totalSeats,availableSeats) VALUES (?,?,?)`;
-
-  db.execute(addUserQuery, [busNumber, totalSeats, availableSeats], (err) => {
-    if (err) {
-      console.log(err);
-      res.status(500).json({
-        message: err.message,
-        success: false,
-      });
-      db.end();
-      return;
-    }
-    console.log("Bus has been added.");
+const addBus = async (req, res) => {
+  try {
+    const { busNumber, totalSeats, availableSeats } = req.body;
+    const buses = await Bus.create({
+      busNumber: busNumber,
+      totalSeats: totalSeats,
+      availableSeats: availableSeats,
+    });
     res.status(201).json({
       message: `Bus with Bus Number ${busNumber} successfully added.`,
       success: true,
     });
-  });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+      success: false,
+    });
+  }
 };
 
-const checkSeats = (req, res) => {
-  const seats = Number(req.params.seats);
-  const SeatsQuery = `SELECT id, busNumber, totalSeats, availableSeats FROM Buses WHERE availableSeats >= ? ORDER BY availableSeats DESC`;
-
-  db.execute(SeatsQuery,[seats],(err, result) => {
-    if (err) {
-      console.log(err);
-      res.status(500).json({
-        message: err.message,
-        success: false,
-      });
-      db.end();
-      return;
-    }
-    if (result.length === 0) {
+const checkSeats = async (req, res) => {
+  try {
+    const seats = Number(req.params.seats);
+    const bus = await Bus.findAll({
+      where: {
+        availableSeats: {
+          [Op.gte]: seats,
+        },
+      },
+    });
+    if (bus.length === 0) {
       return res.status(404).json({
-        message: "All Seats are full",
-        success: false,
+        message: `The Batch's of ${seats} are not available.`,
+        status: false,
       });
     }
     res.status(200).json({
-      result,
-      success: true,
+      message: bus,
+      status: true,
     });
-  });
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+      status: false,
+    });
+  }
 };
 
 module.exports = {
