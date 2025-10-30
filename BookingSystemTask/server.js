@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const usersRouter = require("./Routes/usersRoute");
 const busesRouter = require("./Routes/busesRoute");
+const bookingRouter = require("./Routes/bookingRoute");
 const db = require("./Config/db-connection");
 
 // Importing Models
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 
 app.use("/users", usersRouter);
 app.use("/buses", busesRouter);
+app.use("/bookings", bookingRouter);
 
 db.sync({ force: false })
   .then(() => {

@@ -1,5 +1,8 @@
 const db = require("../Config/db-connection");
+const { Bookings } = require("../Model");
 const User = require("../Model/users");
+const Buses = require("../Model/buses");
+
 const addUser = async (req, res) => {
   try {
     const { name, email } = req.body;
@@ -61,7 +64,39 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const getUserBookings = async (req, res) => {
+  try {
+    const userId = Number(req.params.id);
+
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+        status: false,
+      });
+    }
+    const bookings = await Bookings.findAll({
+      where: { userId },
+      attributes: ["id", "seatNumber"],
+      include: [
+        {
+          model: Buses,
+          attributes: ["busNumber"],
+        },
+      ],
+    });
+
+    return res.status(200).json(bookings);
+  } catch (err) {
+    res.status(500).json({
+      message: err.message,
+      status: false,
+    });
+  }
+};
+
 module.exports = {
   addUser,
   getAllUsers,
+  getUserBookings,
 };

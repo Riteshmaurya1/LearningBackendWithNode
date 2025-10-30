@@ -8,6 +8,14 @@ const Bookings = sequelize.define("Bookings", {
     autoIncrement: true,
     allowNull: false,
   },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  busId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
   seatNumber: {
     type: DataTypes.INTEGER,
     allowNull: false,
