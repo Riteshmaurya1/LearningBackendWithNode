@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>School Attendance</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script defer src="./script.js"></script>
+</head>
+
+<body>
+    <header>
+        <label for="attDate">Select a Date:</label>
+        <input type="date" id="attDate" required />
+        <button id="btnSearch" type="button">Search</button>
+        <button id="btnFetchReport" type="button">Fetch Attendance report</button>
+    </header>
+
+    <form>
+        <button id="btnMark" type="submit">Mark Attendance</button>
+    </form>
+
+    <section id="summary"></section>
+
+</body>
+
+</html>
