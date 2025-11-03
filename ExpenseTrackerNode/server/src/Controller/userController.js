@@ -56,6 +56,52 @@ const userSignUp = async (req, res) => {
   }
 };
 
+// ***********************login Logic*******************
+const login = async (req, res) => {
+  try {
+    // extracting data from body
+    const { email, password } = req.body;
+
+    // check if user is register or not
+    const user = await User.findOne({ where: { email } });
+
+    // Check correct password.
+    if (!user) {
+      return res.status(401).json({
+        message: "Invalid username or password",
+      });
+    }
+    // compare password
+    const userPassword = await bcrypt.compare(password, user.password);
+    if (!userPassword) {
+      return res.status(401).json({
+        message: "Invalid password",
+      });
+    }
+
+    // making payload
+    const userPayload = {
+      id: user.id,
+      username: user.username,
+    };
+
+    // generate token
+    const token = generateJwtToken(userPayload);
+
+    // return response with token.
+    return res.status(200).json({
+      token,
+      user,
+    });
+  } catch (err) {
+    res.status(500).json({
+      err: err.message,
+      success: false,
+    });
+  }
+};
+
 module.exports = {
   userSignUp,
+  login,
 };
