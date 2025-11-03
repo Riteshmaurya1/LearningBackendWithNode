@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In</title>
+    <link rel="stylesheet" href="../signUp/stylesheet.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="floating-words">
+        <span>Debit</span>
+        <span>Credit</span>
+        <span>Expense</span>
+        <span>Income</span>
+        <span>Saving</span>
+        <span>Budget</span>
+        <span>Wallet</span>
+        <span>Cash</span>
+    </div>
+    <div class="signup-container">
+        <div class="card">
+            <div class="brand">
+                <span class="logo">₹</span>
+                <h1>Expense Tracker</h1>
+            </div>
+
+            <h2>Sign In Your Account</h2>
+
+            <form onsubmit="handleFormSignUp(event)" class="form">
+                <label>
+                    <span>Email</span>
+                    <input type="email" name="email" required />
+                </label>
+
+                <label>
+                    <span>Password</span>
+                    <input type="password" name="password" required />
+                </label>
+
+                <button type="submit">Sign In</button>
+            </form>
+
+            <p class="switch">
+                Already have an account?
+                <a href="../signUp/signUp.html">Sign up</a>
+            </p>
+        </div>
+    </div>
+    <script src="./index.js"></script>
+</body>
+
+</html>
