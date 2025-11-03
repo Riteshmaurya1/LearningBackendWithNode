@@ -17,16 +17,14 @@ async function handleFormSignUp(event) {
   //   make axios post req to the backend
   try {
     const response = await axios.post(`${GlobalLink}/signup`, userData);
-    response.then((res) => {
-      console.log(res.data);
-    });
-    if (!response) {
-      alert("Sign Up Failed.");
+    if (response.status === 200 || response.status === 201) {
+      alert(`Sign Up Successful! Welcome`);
     } else {
-      alert("Sign Up Successfull.");
+      alert("Sign Up Failed. Please try again.");
     }
   } catch (err) {
-    console.log(err);
+    alert("Signup failed: " + (err.response?.data?.message || err.message));
   }
+
   event.target.reset();
 }
