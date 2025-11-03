@@ -15,8 +15,18 @@ async function handleFormSignUp(event) {
   console.log(userData);
 
   //   make axios post req to the backend
-  const response = await axios.post(`${GlobalLink}/signup`, userData);
-  response.then((res) => {
-    console.log(res.data);
-  });
+  try {
+    const response = await axios.post(`${GlobalLink}/signup`, userData);
+    response.then((res) => {
+      console.log(res.data);
+    });
+    if (!response) {
+      alert("Sign Up Failed.");
+    } else {
+      alert("Sign Up Successfull.");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+  event.target.reset();
 }
