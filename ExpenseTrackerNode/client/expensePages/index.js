@@ -1,7 +1,6 @@
 const GlobalLink = "http://localhost:3000/expense";
 const token = localStorage.getItem("token");
 
-
 function display(expenseData) {
   const ul = document.querySelector("ul");
   const li = document.createElement("li");
@@ -90,3 +89,8 @@ window.addEventListener("DOMContentLoaded", async () => {
     console.error(error);
   }
 });
+
+// premium button
+async function handlePremium() {
+  
+}

@@ -6,6 +6,27 @@
   font-family: "Poppins", sans-serif;
 }
 
+/* ---- Premium Button (Top Right Corner) ---- */
+.premium-div {
+  position: fixed;
+  top: 20px;
+  right: 25px;
+  z-index: 1000;
+}
+
+/* ---- Button Style ---- */
+.premium-btn {
+  background: black !important;
+  border: none;
+  color: #fcfcfc;
+  font-weight: 600;
+  padding: 10px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
 /* ---- Floating Words Glass Style ---- */
 .floating-words span {
   position: absolute;
@@ -88,7 +109,8 @@
 
 /* ---- Floating Animation ---- */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0) scale(1);
     opacity: 0.8;
   }
