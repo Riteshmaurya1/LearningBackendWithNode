@@ -7,11 +7,14 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const userRouter = require("./src/Routes/userRoutes");
+const expenseRouter = require("./src/Routes/expenseRoutes");
+const { jwtAuth } = require("./src/auth/jwt");
 
 const PORT = process.env.PORT;
 
 // require Models
 require("./src/Model/user");
+require("./src/Model/expense");
 
 // Middleware for parsing
 app.use(express.json());
@@ -25,6 +28,7 @@ app.get("/", (req, res) => {
 
 // Custom routes.
 app.use("/user", userRouter);
+app.use("/expense", expenseRouter);
 
 (async () => {
   try {

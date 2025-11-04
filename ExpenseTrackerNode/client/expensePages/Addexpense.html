@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Expenses</title>
+    <link rel="stylesheet" href="./expensePagecss.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="floating-words">
+        <span>Debit</span>
+        <span>Credit</span>
+        <span>Expense</span>
+        <span>Income</span>
+        <span>Saving</span>
+        <span>Budget</span>
+        <span>Wallet</span>
+        <span>Cash</span>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h2>Add Expense</h2>
+
+            <form onsubmit="handleExpense(event)" class="form">
+                <label>
+                    <span>Amount</span>
+                    <input type="number" name="expenseamount" required placeholder="Enter Expense Amount" />
+                </label>
+
+                <label>
+                    <span>Description</span>
+                    <input type="text" name="description" required placeholder="Enter Description" />
+                </label>
+
+                <label>
+                    <span>Choose Category</span>
+                    <select name="category" class="custom-select">
+                        <option value="fuel">Fuel</option>
+                        <option value="food">Food</option>
+                        <option value="electricity">Electricity</option>
+                        <option value="movie">Movie</option>
+                        <option value="travel">Travel</option>
+                    </select>
+                </label>
+
+                <button type="submit">Add</button>
+            </form>
+        </div>
+        <div class="card">
+            <ul>
+                <li>Amount - Description - Category</li>
+            </ul>
+        </div>
+    </div>
+    <script src="./index.js"></script>
+</body>
+
+</html>
