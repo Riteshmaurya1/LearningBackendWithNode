@@ -2,6 +2,7 @@ const User = require("../Model/user");
 const bcrypt = require("bcrypt");
 const { generateJwtToken } = require("../auth/jwt");
 
+// ****************** Register Logic ********************
 const userSignUp = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -57,7 +58,7 @@ const userSignUp = async (req, res) => {
   }
 };
 
-// ***********************login Logic*******************
+// *********************** login Logic*******************
 const login = async (req, res) => {
   try {
     // extracting data from body
@@ -68,8 +69,8 @@ const login = async (req, res) => {
 
     // Check correct password.
     if (!user) {
-      return res.status(401).json({
-        message: "Invalid username or password",
+      return res.status(404).json({
+        message: "User not found.",
       });
     }
     // compare password
