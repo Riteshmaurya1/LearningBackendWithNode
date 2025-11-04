@@ -1,4 +1,5 @@
 const GlobalLink = "http://localhost:3000/expense";
+const token = localStorage.getItem("token");
 
 function display(expenseData) {
   const ul = document.querySelector("ul");
@@ -31,7 +32,9 @@ function display(expenseData) {
     console.log(id);
 
     try {
-      const response = await axios.delete(`${GlobalLink}/delete/${id}`);
+      const response = await axios.delete(`${GlobalLink}/delete/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       if (response.status === 200) {
         alert(`Expense Deleted Successfully.`);
       } else {
@@ -60,7 +63,9 @@ async function handleExpense(event) {
   console.log(extractedData);
 
   try {
-    const response = await axios.post(`${GlobalLink}/add`, extractedData);
+    const response = await axios.post(`${GlobalLink}/add`, extractedData, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     if (response.status === 200 || response.status === 201) {
       alert(`Expense added Successfully.`);
     } else {
@@ -73,18 +78,14 @@ async function handleExpense(event) {
   event.target.reset();
 }
 
-// async function deleteItem(id) {}
-
-window.addEventListener("DOMContentLoaded", () => {
-  axios
-    .get(`${GlobalLink}/all`)
-    .then((res) => {
-      for (let i = 0; i < res.data.expenseList.length; i++) {
-        display(res.data.expenseList[i]);
-      }
-    })
-    .catch((error) => {
-      alert(`Error: ` + error.message);
-      console.log(error);
+window.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const res = await axios.get(`${GlobalLink}/all`, {
+      headers: { Authorization: `Bearer ${token}` },
     });
+    res.data.expenseList.forEach((exp) => display(exp));
+  } catch (error) {
+    alert(`Error: ` + error.message);
+    console.error(error);
+  }
 });

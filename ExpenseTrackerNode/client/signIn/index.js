@@ -15,7 +15,11 @@ async function handleFormSignUp(event) {
   //   make axios post req to the backend
   try {
     const response = await axios.post(`${GlobalLink}/login`, userData);
+    window.location.href = "../expensePages/Addexpense.html";
+
     if (response.status === 200 || response.status === 201) {
+      const token = response.data.token;
+      localStorage.setItem("token", token);
       alert(`Sign Up Successful! Welcome`);
     } else {
       alert("Sign Up Failed. Please try again.");
@@ -24,5 +28,5 @@ async function handleFormSignUp(event) {
     alert("Signup failed: " + (err.response?.data?.message || err.message));
   }
 
-  event.target.reset();
+  // event.target.reset();
 }

@@ -6,9 +6,11 @@ const db = require("./src/Config/db-connection");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
+const User = require("./src/Model/user");
+const Expense = require("./src/Model/expense");
+
 const userRouter = require("./src/Routes/userRoutes");
 const expenseRouter = require("./src/Routes/expenseRoutes");
-const { jwtAuth } = require("./src/auth/jwt");
 
 const PORT = process.env.PORT;
 
@@ -16,9 +18,13 @@ const PORT = process.env.PORT;
 require("./src/Model/user");
 require("./src/Model/expense");
 
+// Associations.
+User.hasMany(Expense);
+Expense.belongsTo(User);
+
 // Middleware for parsing
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 

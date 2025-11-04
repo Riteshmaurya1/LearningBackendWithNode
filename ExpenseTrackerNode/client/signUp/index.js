@@ -17,6 +17,7 @@ async function handleFormSignUp(event) {
   //   make axios post req to the backend
   try {
     const response = await axios.post(`${GlobalLink}/signup`, userData);
+    window.location.href = "../signIn/signIn.html";
     if (response.status === 200 || response.status === 201) {
       alert(`Sign Up Successful! Welcome`);
     } else {
