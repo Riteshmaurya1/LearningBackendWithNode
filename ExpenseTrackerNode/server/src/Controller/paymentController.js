@@ -1,5 +1,9 @@
 const { createOrder, orderStatus } = require("../Services/cashfreeService");
 const Payment = require("../Model/payment");
+const User = require("../Model/user");
+const Expense = require("../Model/expense");
+const { Sequelize } = require("sequelize");
+const { fn, col } = Sequelize;
 
 // Make Payment
 const processPayment = async (req, res) => {
@@ -94,4 +98,28 @@ const getPaymentStatus = async (req, res) => {
   }
 };
 
-module.exports = { processPayment, getPaymentStatus };
+const showLeaderBoard = async (req, res) => {
+  try {
+    const leaderboard = await User.findAll({
+      attributes: [
+        "username",
+        [fn("SUM", col("Expenses.amount")), "totalExpense"],
+      ],
+      include: [
+        {
+          model: Expense,
+          attributes: [],
+        },
+      ],
+      group: ["User.id"],
+      order: [[fn("SUM", col("Expenses.amount")), "DESC"]],
+    });
+    res.status(200).json({ success: true, data: leaderboard });
+  } catch (error) {
+    res.status(500).json({
+      err: error.message,
+    });
+  }
+};
+
+module.exports = { processPayment, getPaymentStatus, showLeaderBoard };

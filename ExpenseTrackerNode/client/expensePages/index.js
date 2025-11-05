@@ -1,121 +1,134 @@
 const GlobalLink = "http://localhost:3000/expense";
 const PaymentLink = "http://localhost:3000/premium";
 const token = localStorage.getItem("token");
+
 if (!token) {
   window.location.href = "../signUp/signup.html";
 }
 
+// Display a single expense item
 function display(expenseData) {
   const ul = document.querySelector("ul");
   const li = document.createElement("li");
 
-  if (expenseData.id) {
-    li.dataset.id = expenseData.id;
-  }
+  if (expenseData.id) li.dataset.id = expenseData.id;
 
-  // Make a new span tag for the combining the elements.
   const span = document.createElement("span");
   span.textContent = `${expenseData.amount} - ${expenseData.description} - ${expenseData.category}`;
-  // then append to the main li.
   li.appendChild(span);
 
-  // then add delete and edit button on users list.
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "Delete";
   deleteBtn.style =
-    "background:black;color:white;radius:1px;height:35px;width:50px";
+    "background:black;color:white;height:35px;width:60px;margin-left:10px;";
   li.appendChild(deleteBtn);
 
-  // then appnd the both button wit li to the ul.
   ul.appendChild(li);
 
-  // then make delete functionlity in the users lists.
-  deleteBtn.addEventListener("click", async function (event) {
-    const el = event.target.parentElement;
-    const id = el.dataset.id;
-    console.log(id);
-
+  // Delete expense
+  deleteBtn.addEventListener("click", async () => {
     try {
-      const response = await axios.delete(`${GlobalLink}/delete/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.delete(
+        `${GlobalLink}/delete/${expenseData.id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       if (response.status === 200) {
-        alert(`Expense Deleted Successfully.`);
+        alert("Expense deleted successfully.");
+        li.remove();
       } else {
-        alert("Expense not Deleted");
+        alert("Failed to delete expense.");
       }
     } catch (err) {
-      alert("Deletion failed: ");
+      console.error(err);
+      alert("Error deleting expense.");
     }
   });
 }
 
+// Add new expense
 async function handleExpense(event) {
   event.preventDefault();
 
-  // extracting the values from the add expense form.
   const expenseAmount = event.target.expenseamount.value.trim();
   const description = event.target.description.value.trim();
   const category = event.target.category.value.trim();
 
-  //   making the object from extracted data
-  const extractedData = {
-    amount: expenseAmount,
-    description,
-    category,
-  };
-  console.log(extractedData);
+  const data = { amount: expenseAmount, description, category };
 
   try {
-    const response = await axios.post(`${GlobalLink}/add`, extractedData, {
+    const response = await axios.post(`${GlobalLink}/add`, data, {
       headers: { Authorization: `Bearer ${token}` },
     });
     if (response.status === 200 || response.status === 201) {
-      alert(`Expense added Successfully.`);
+      alert("Expense added successfully.");
+      display(response.data.newExpense || data);
     } else {
-      alert("Expense not added");
+      alert("Expense not added.");
     }
   } catch (err) {
-    alert("failed: " + (err.response?.data?.message || err.message));
+    alert("Failed: " + (err.response?.data?.message || err.message));
   }
 
   event.target.reset();
 }
 
+// Load expenses on page load
 window.addEventListener("DOMContentLoaded", async () => {
   try {
     const res = await axios.get(`${GlobalLink}/all`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    res.data.expenseList.forEach((exp) => display(exp));
+    res.data.expenseList.forEach(display);
   } catch (error) {
-    alert(`Error: ` + error.message);
     console.error(error);
+    alert("Failed to load expenses.");
   }
 });
 
-// premium button
-const premiumBtn = document.getElementById("renderBtn");
-const cashfree = Cashfree({
-  mode: "sandbox",
-});
+// Payment and premium functionality
+const premiumBtn = document.getElementById("premiumBtn");
+const cashfree = Cashfree({ mode: "sandbox" });
+
 premiumBtn.addEventListener("click", async () => {
   try {
     const orderId = `order_${Date.now()}`;
-    const sessionIdResponse = await axios.post(
+    const paymentSession = await axios.post(
       `${PaymentLink}/pay`,
       { orderId },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
+      { headers: { Authorization: `Bearer ${token}` } }
     );
 
-    let checkoutOptions = {
-      paymentSessionId: sessionIdResponse?.data?.paymentSessionId,
+    const checkoutOptions = {
+      paymentSessionId: paymentSession?.data?.paymentSessionId,
       redirectTarget: "_self",
     };
+
     cashfree.checkout(checkoutOptions);
   } catch (error) {
-    console.log(error);
+    console.error("Payment error:", error);
+    alert("Error initiating payment.");
+  }
+});
+
+// Leaderboard
+const leaderboardBtn = document.getElementById("leaderboardBtn");
+leaderboardBtn.addEventListener("click", async () => {
+  try {
+    const res = await axios.get(`${PaymentLink}/leaderboard`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const ul = document.getElementById("leaderBoard");
+    ul.innerHTML = "";
+    res.data.data.forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = `${item.username} - ₹${item.totalExpense}`;
+      ul.appendChild(li);
+    });
+  } catch (error) {
+    console.error(error);
+    alert("Error loading leaderboard.");
   }
 });

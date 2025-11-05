@@ -8,8 +8,8 @@
 
 /* ---- Premium Button (Top Right Corner) ---- */
 .premium-div {
-  position: fixed;
-  top: 20px;
+  position: absolute;
+  top: 10px;
   right: 25px;
   z-index: 1000;
 }
@@ -21,6 +21,30 @@
   color: #fcfcfc;
   font-weight: 600;
   padding: 10px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+/* ---- Premium Button (Top Right Corner) ---- */
+.premium-user {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  left: 25px;
+  z-index: 1000;
+}
+.premium-user span{
+  color: black;
+}
+
+/* ---- Button Style ---- */
+.premium-user-btn {
+  background: black !important;
+  border: none;
+  color: #fcfcfc;
+  font-weight: 600;
+  padding: 5px 5px;
   border-radius: 10px;
   cursor: pointer;
   font-size: 14px;
@@ -128,17 +152,18 @@ body {
   justify-content: center;
   background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
   background-attachment: fixed;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 /* ---- Two Column Container ---- */
 .container {
+  padding-top: 70px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   gap: 40px;
   width: 90%;
-  max-width: 1000px;
+  max-width: 10000px;
   margin: auto;
   flex-wrap: wrap;
 }
