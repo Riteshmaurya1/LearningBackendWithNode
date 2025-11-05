@@ -1,5 +1,5 @@
 const express = require("express");
-const paymentRouter = express.Router();
+const premiumRouter = express.Router();
 const {
   processPayment,
   getPaymentStatus,
@@ -7,7 +7,7 @@ const {
 const { jwtAuth } = require("../auth/jwt");
 
 // paymentRouter.get("/", jwtAuth, getPaymentPage);
-paymentRouter.post("/pay", jwtAuth, processPayment);
-paymentRouter.get("/payment-status/:orderId", jwtAuth, getPaymentStatus);
+premiumRouter.post("/pay", jwtAuth, processPayment);
+premiumRouter.get("/payment-status/:orderId", jwtAuth, getPaymentStatus);
 
-module.exports = paymentRouter;
+module.exports = premiumRouter;
