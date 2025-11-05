@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Expenses</title>
     <link rel="stylesheet" href="./expensePagecss.css">
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
     <div class="premium-div">
-        <button class="premium-btn" onclick="handlePremium()">Get Premium</button>
+        <button class="premium-btn" id="renderBtn">Get Premium</button>
     </div>
     <div class="floating-words">
         <span>Debit</span>

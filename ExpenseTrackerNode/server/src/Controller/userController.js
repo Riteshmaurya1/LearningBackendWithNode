@@ -85,6 +85,7 @@ const login = async (req, res) => {
     const userPayload = {
       id: user.id,
       username: user.username,
+      email: user.email,
     };
 
     // generate token

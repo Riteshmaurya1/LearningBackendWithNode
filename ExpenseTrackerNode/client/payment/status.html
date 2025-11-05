@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Status</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px 50px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .status {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            color: #fff;
+        }
+
+        .success {
+            background-color: #4caf50;
+        }
+
+        .pending {
+            background-color: #ff9800;
+        }
+
+        .failed {
+            background-color: #f44336;
+        }
+
+        .details {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            text-decoration: none;
+            background-color: #1976d2;
+            color: #fff;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #115293;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Payment Status</h1>
+        <div id="paymentStatus" class="status">Loading...</div>
+        <div class="details">
+            <p>Order ID: <span id="orderId">-</span></p>
+            <p>Amount: ₹<span id="amount">-</span></p>
+            <p>Message: <span id="message">-</span></p>
+        </div>
+        <a href="../expensePages/Addexpense.html" class="btn">Go to Home</a>
+    </div>
+
+    <!-- Axios CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId');
+
+
+        async function fetchPaymentStatus() {
+            try {
+                const token = localStorage.getItem('token');
+                const res = await axios.get(`http://localhost:3000/premium/payment-status/${orderId}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                const data = res.data;
+
+                const { paymentStatus, message, amount, orderId: orderID } = data;
+
+                document.getElementById('orderId').textContent = orderID;
+                document.getElementById('amount').textContent = amount;
+                document.getElementById('message').textContent = message;
+
+                const statusDiv = document.getElementById('paymentStatus');
+                if (paymentStatus === 'SUCCESS') statusDiv.textContent = 'Payment Successful', statusDiv.classList.add('success');
+                else if (paymentStatus === 'PENDING') statusDiv.textContent = 'Payment Pending', statusDiv.classList.add('pending');
+                else statusDiv.textContent = 'Payment Failed', statusDiv.classList.add('failed');
+
+            } catch (err) {
+                console.error(err);
+                const statusDiv = document.getElementById('paymentStatus');
+                statusDiv.textContent = 'Error fetching payment status';
+                statusDiv.classList.add('failed');
+            }
+        }
+
+        fetchPaymentStatus();
+    </script>
+</body>
+
+</html>

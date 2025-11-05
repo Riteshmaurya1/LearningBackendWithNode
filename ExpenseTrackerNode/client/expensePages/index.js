@@ -1,5 +1,9 @@
 const GlobalLink = "http://localhost:3000/expense";
+const PaymentLink = "http://localhost:3000/premium";
 const token = localStorage.getItem("token");
+if (!token) {
+  window.location.href = "../signUp/signup.html";
+}
 
 function display(expenseData) {
   const ul = document.querySelector("ul");
@@ -91,6 +95,27 @@ window.addEventListener("DOMContentLoaded", async () => {
 });
 
 // premium button
-async function handlePremium() {
-  
-}
+const premiumBtn = document.getElementById("renderBtn");
+const cashfree = Cashfree({
+  mode: "sandbox",
+});
+premiumBtn.addEventListener("click", async () => {
+  try {
+    const orderId = `order_${Date.now()}`;
+    const sessionIdResponse = await axios.post(
+      `${PaymentLink}/pay`,
+      { orderId },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    let checkoutOptions = {
+      paymentSessionId: sessionIdResponse?.data?.paymentSessionId,
+      redirectTarget: "_self",
+    };
+    cashfree.checkout(checkoutOptions);
+  } catch (error) {
+    console.log(error);
+  }
+});

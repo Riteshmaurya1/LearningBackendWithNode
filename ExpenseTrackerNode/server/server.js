@@ -6,17 +6,20 @@ const db = require("./src/Config/db-connection");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
+// require Models for the associations
 const User = require("./src/Model/user");
 const Expense = require("./src/Model/expense");
 
 const userRouter = require("./src/Routes/userRoutes");
 const expenseRouter = require("./src/Routes/expenseRoutes");
+const paymentRouter = require("./src/Routes/paymentRoutes");
 
 const PORT = process.env.PORT;
 
 // require Models
 require("./src/Model/user");
 require("./src/Model/expense");
+require("./src/Model/payment");
 
 // Associations.
 User.hasMany(Expense);
@@ -35,6 +38,7 @@ app.get("/", (req, res) => {
 // Custom routes.
 app.use("/user", userRouter);
 app.use("/expense", expenseRouter);
+app.use("/premium", paymentRouter);
 
 (async () => {
   try {
