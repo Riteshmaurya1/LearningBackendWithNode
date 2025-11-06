@@ -99,6 +99,8 @@ const getPaymentStatus = async (req, res) => {
   }
 };
 
+
+// Show LeaderBoard with the help of joins.
 const showLeaderBoard = async (req, res) => {
   try {
     const leaderboard = await User.findAll({
