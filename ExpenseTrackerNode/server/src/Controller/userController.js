@@ -104,7 +104,31 @@ const login = async (req, res) => {
   }
 };
 
+const profile = async (req, res) => {
+  try {
+    // Step 1: getting user is from JWT Payload.
+    const userId = req.payload.id;
+
+    // Step 2: find user Details with userId.
+    const userDetails = await User.findByPk(userId);
+    if (!userDetails) {
+      return res.json(404).json({
+        message: "user not found",
+      });
+    }
+    // console.log(user);
+    return res.status(200).json({
+      data: userDetails,
+    });
+  } catch (err) {
+    res.status(500).json({
+      err: err.message,
+    });
+  }
+};
+
 module.exports = {
   userSignUp,
   login,
+  profile,
 };

@@ -12,11 +12,11 @@
 
 <body>
     <div class="premium-user">
-        <span>You are a premium user now</span>
-        <button class="premium-user-btn" id="leaderboardBtn">Show Leaderboard</button>
+        <span id="premium-span" style="display: none;"></span>
+        <button class="premium-user-btn" id="leaderboardBtn" style="display: none;">Show Leaderboard</button>
     </div>
     <div class="premium-div">
-        <button class="premium-btn" id="premiumBtn">Get Premium</button>
+        <button class="premium-btn" id="premiumBtn" style="display: none;">Get Premium</button>
     </div>
     <div class="floating-words">
         <span>Debit</span>
@@ -62,7 +62,7 @@
                 <li>Amount - Description - Category</li>
             </ul>
         </div>
-        <div class="card">
+        <div class="card" id="leaderBoard-div" style="display: none;">
             <ul id="leaderBoard">
                 <li>Username - Total Expenses</li>
             </ul>

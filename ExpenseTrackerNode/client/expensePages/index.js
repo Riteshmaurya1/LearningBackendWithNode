@@ -1,6 +1,8 @@
 const GlobalLink = "http://localhost:3000/expense";
 const PaymentLink = "http://localhost:3000/payment";
 const PremiumFeatureLink = "http://localhost:3000/premium";
+const UserProfile = "http://localhost:3000/user";
+
 const token = localStorage.getItem("token");
 
 if (!token) {
@@ -133,3 +135,27 @@ leaderboardBtn.addEventListener("click", async () => {
     alert("Error loading leaderboard.");
   }
 });
+
+const premiumWelconeSpan = document.getElementById("premium-span");
+const leaderBoardDiv = document.getElementById("leaderBoard-div");
+async function hideAndDisplayPremium() {
+  try {
+    const userData = await axios.get(`${UserProfile}/profile`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const paymentStatus = userData?.data?.data?.isPremium;
+    console.log(paymentStatus);
+
+    if (paymentStatus) {
+      leaderboardBtn.style.display = "inline-block";
+      leaderBoardDiv.style.display = "inline-block";
+      premiumWelconeSpan.innerText = "You are now premium user";
+      premiumWelconeSpan.style.display = "inline-block";
+    } else {
+      premiumBtn.style.display = "inline-block";
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+hideAndDisplayPremium();
