@@ -1,5 +1,6 @@
 const GlobalLink = "http://localhost:3000/expense";
-const PaymentLink = "http://localhost:3000/premium";
+const PaymentLink = "http://localhost:3000/payment";
+const PremiumFeatureLink = "http://localhost:3000/premium";
 const token = localStorage.getItem("token");
 
 if (!token) {
@@ -87,7 +88,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-// Payment and premium functionality
+// Payment Btn for getting premium subscription.
 const premiumBtn = document.getElementById("premiumBtn");
 const cashfree = Cashfree({ mode: "sandbox" });
 
@@ -112,11 +113,11 @@ premiumBtn.addEventListener("click", async () => {
   }
 });
 
-// Leaderboard
+// Leaderboard of premium feature functionality
 const leaderboardBtn = document.getElementById("leaderboardBtn");
 leaderboardBtn.addEventListener("click", async () => {
   try {
-    const res = await axios.get(`${PaymentLink}/leaderboard`, {
+    const res = await axios.get(`${PremiumFeatureLink}/leaderboard`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 

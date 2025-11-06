@@ -12,7 +12,8 @@ const Expense = require("./src/Model/expense");
 
 const userRouter = require("./src/Routes/userRoutes");
 const expenseRouter = require("./src/Routes/expenseRoutes");
-const premiumRouter = require("./src/Routes/premiumRoutes");
+const paymentRouter = require("./src/Routes/paymentRoutes");
+const premiumRouter = require("./src/Routes/premiumFeatureRoutes");
 
 const PORT = process.env.PORT;
 
@@ -38,6 +39,7 @@ app.get("/", (req, res) => {
 // Custom routes.
 app.use("/user", userRouter);
 app.use("/expense", expenseRouter);
+app.use("/payment", paymentRouter);
 app.use("/premium", premiumRouter);
 
 (async () => {

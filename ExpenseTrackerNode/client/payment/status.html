@@ -92,7 +92,7 @@
         async function fetchPaymentStatus() {
             try {
                 const token = localStorage.getItem('token');
-                const res = await axios.get(`http://localhost:3000/premium/payment-status/${orderId}`, {
+                const res = await axios.get(`http://localhost:3000/payment/payment-status/${orderId}`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 const data = res.data;
