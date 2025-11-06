@@ -1,9 +1,6 @@
 const { createOrder, orderStatus } = require("../Services/cashfreeService");
 const Payment = require("../Model/payment");
 const User = require("../Model/user");
-const Expense = require("../Model/expense");
-const { Sequelize } = require("sequelize");
-const { fn, col } = Sequelize;
 
 // Make Payment
 const processPayment = async (req, res) => {
@@ -48,16 +45,25 @@ const processPayment = async (req, res) => {
   }
 };
 
-
 // Check Payment Status
 const getPaymentStatus = async (req, res) => {
   const { orderId } = req.params;
+  const userId = req.payload.id;
 
   try {
     // Step 1: Invoke OrderStatus func.
     let { payment_status, payment_message, payment_amount } = await orderStatus(
       orderId
     );
+
+    // update the user isPremium.
+    let user = await User.findByPk(userId);
+
+    if (payment_status === "SUCCESS") {
+      // Update isPremium status if user has successfull transaction
+      await user.update({ isPremium: 1 });
+    }
+    console.log(user);
 
     // Align Order Status with payment status
     let paymentOrderStatus;
@@ -86,6 +92,7 @@ const getPaymentStatus = async (req, res) => {
       paymentStatus: payment_status,
       message: payment_message,
       amount: payment_amount,
+      isPremium: user.isPremium,
     });
   } catch (error) {
     if (error.response?.data?.code === "order_not_found") {
@@ -99,30 +106,4 @@ const getPaymentStatus = async (req, res) => {
   }
 };
 
-
-// Show LeaderBoard with the help of joins.
-const showLeaderBoard = async (req, res) => {
-  try {
-    const leaderboard = await User.findAll({
-      attributes: [
-        "username",
-        [fn("SUM", col("Expenses.amount")), "totalExpense"],
-      ],
-      include: [
-        {
-          model: Expense,
-          attributes: [],
-        },
-      ],
-      group: ["User.id"],
-      order: [[fn("SUM", col("Expenses.amount")), "DESC"]],
-    });
-    res.status(200).json({ success: true, data: leaderboard });
-  } catch (error) {
-    res.status(500).json({
-      err: error.message,
-    });
-  }
-};
-
-module.exports = { processPayment, getPaymentStatus, showLeaderBoard };
+module.exports = { processPayment, getPaymentStatus };

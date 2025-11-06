@@ -125,7 +125,7 @@ leaderboardBtn.addEventListener("click", async () => {
     ul.innerHTML = "";
     res.data.data.forEach((item) => {
       const li = document.createElement("li");
-      li.textContent = `${item.username} - ₹${item.totalExpense}`;
+      li.textContent = `${item.username} - ₹${item.TotalExpenses}`;
       ul.appendChild(li);
     });
   } catch (error) {

@@ -11,6 +11,14 @@ const User = sequelize.define("user", {
     allowNull: false,
     unique: true,
   },
+  totalExpenses: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  isPremium: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
   password: {
     type: DataTypes.STRING,
     allowNull: false,

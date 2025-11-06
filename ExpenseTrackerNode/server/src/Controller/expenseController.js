@@ -1,4 +1,6 @@
+const { fn, col } = require("sequelize");
 const Expense = require("../Model/expense");
+const User = require("../Model/user");
 
 const addExpense = async (req, res) => {
   try {
@@ -10,12 +12,24 @@ const addExpense = async (req, res) => {
         message: "Provide all feilds.",
       });
     }
+
+    // Find the user is present on db or not.
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
     const expense = await Expense.create({
       amount,
       description,
       category,
       userId,
     });
+
+    // Update total expense for the user
+    const TotalExpense = (user.totalExpenses || 0) + parseFloat(amount);
+
+    await user.update({ totalExpenses: TotalExpense });
 
     res.status(201).json({
       data: expense,
