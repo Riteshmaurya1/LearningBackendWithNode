@@ -1,17 +1,25 @@
 const { fn, col } = require("sequelize");
 const Expense = require("../Model/expense");
 const User = require("../Model/user");
+const makeCategory = require("../Config/gemini-category");
 
 const addExpense = async (req, res) => {
   try {
     const userId = req.payload.id;
 
     const { amount, description, category } = req.body;
-    if (!amount || !description || !category) {
+    if (!amount || !description) {
       return res.status(401).json({
         message: "Provide all feilds.",
       });
     }
+
+    // Auto-generate category if missing or empty
+    let finalCategory =
+      category && category.trim() !== ""
+        ? category
+        : await makeCategory(description);
+    console.log(finalCategory);
 
     // Find the user is present on db or not.
     const user = await User.findByPk(userId);
@@ -22,7 +30,7 @@ const addExpense = async (req, res) => {
     const expense = await Expense.create({
       amount,
       description,
-      category,
+      category: finalCategory,
       userId,
     });
 
@@ -36,7 +44,7 @@ const addExpense = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      err: err.message,
+      err: error.message,
     });
   }
 };

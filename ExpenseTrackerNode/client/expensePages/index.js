@@ -11,6 +11,8 @@ if (!token) {
 
 // Display a single expense item
 function display(expenseData) {
+  console.log(expenseData);
+
   const ul = document.querySelector("ul");
   const li = document.createElement("li");
 
