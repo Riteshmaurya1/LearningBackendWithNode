@@ -6,22 +6,53 @@
     <title>School Attendance</title>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script defer src="./script.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        header {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 120px 120px;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 0;
+        }
+
+        #summary div {
+            margin: 5px 0;
+        }
+
+        button {
+            cursor: pointer;
+            padding: 6px 12px;
+        }
+    </style>
 </head>
 
 <body>
     <header>
-        <label for="attDate">Select a Date:</label>
+        <label for="attDate">Date:</label>
         <input type="date" id="attDate" required />
         <button id="btnSearch" type="button">Search</button>
-        <button id="btnFetchReport" type="button">Fetch Attendance report</button>
+        <button id="btnFetchReport" type="button">Summary</button>
     </header>
 
-    <form>
-        <button id="btnMark" type="submit">Mark Attendance</button>
+    <form id="attForm">
+        <button id="btnMark" type="submit" style="display:none;">Mark Attendance</button>
     </form>
 
     <section id="summary"></section>
-
 </body>
 
 </html>

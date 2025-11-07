@@ -1,10 +1,10 @@
 const express = require("express");
+const attendanceRoutes = express.Router();
 const {
   searchByDate,
   markAttendance,
   getSummary,
 } = require("../Controller/attendanceController");
-const attendanceRoutes = express.Router();
 
 attendanceRoutes.post("/attendance", searchByDate);
 attendanceRoutes.post("/attendance/mark", markAttendance);

@@ -2,11 +2,15 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const db = require("./config/db-connection");
-const attendanceRoutes = require("./Routes/attendanceRouter");
+require("dotenv").config();
 
+// Making port for listioning app.
+const PORT = process.env.PORT || 4000;
+
+const attendanceRoutes = require("./Routes/attendanceRouter");
 // Importing Models
-const studentRecords = require("./Model/records");
-const attendanceRecords = require("./Model/attendance");
+require("./Model/records");
+require("./Model/attendance");
 
 // Middleware for json data parsing
 app.use(express.json());
@@ -22,8 +26,8 @@ app.use("/student", attendanceRoutes);
 
 db.sync({ force: false })
   .then(() => {
-    app.listen(3000, () => {
-      console.log("Server is listing on port 3000");
+    app.listen(PORT, () => {
+      console.log(`Server is listing on port : ${PORT}`);
     });
   })
   .catch((err) => {
