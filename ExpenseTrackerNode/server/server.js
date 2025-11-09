@@ -14,6 +14,7 @@ const userRouter = require("./src/Routes/userRoutes");
 const expenseRouter = require("./src/Routes/expenseRoutes");
 const paymentRouter = require("./src/Routes/paymentRoutes");
 const premiumRouter = require("./src/Routes/premiumFeatureRoutes");
+const forgetPasswordRouter = require("./src/Routes/forgetPasswordRoutes");
 
 const PORT = process.env.PORT;
 
@@ -41,6 +42,7 @@ app.use("/user", userRouter);
 app.use("/expense", expenseRouter);
 app.use("/payment", paymentRouter);
 app.use("/premium", premiumRouter);
+app.use('/password',forgetPasswordRouter);
 
 (async () => {
   try {

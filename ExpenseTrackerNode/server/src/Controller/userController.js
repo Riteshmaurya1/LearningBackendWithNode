@@ -41,6 +41,7 @@ const userSignUp = async (req, res) => {
       username: user.username,
       email: user.email,
     };
+    
     // making Token
     const token = generateJwtToken(userPayload);
     console.log(token);

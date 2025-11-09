@@ -11,6 +11,7 @@ const processPayment = async (req, res) => {
     // access token from payload
     const { id, username, email } = req.payload;
     const { orderId } = req.body;
+    
     // Create an order and get payment sessionId.
     const paymentSessionId = await createOrder(
       orderId,
