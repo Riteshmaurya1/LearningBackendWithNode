@@ -1,5 +1,4 @@
----- Global Reset ----
-* {
+---- Global Reset ---- * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -33,8 +32,10 @@
   top: 10px;
   right: 25px;
   z-index: 1000;
+  gap: 10px;
+  height: 40px;
 }
-.premium-user span{
+.premium-user span {
   color: black;
 }
 
@@ -49,6 +50,29 @@
   cursor: pointer;
   font-size: 14px;
   letter-spacing: 0.5px;
+}
+
+/* ******* Download Btn ********* */
+.download-icon-btn {
+  background: black;
+  border: none;
+  color: white;
+  width: 70px;
+  height: 37px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.download-icon-btn:hover {
+  background: #0a0a0a;
+}
+
+.download-icon-btn i {
+  font-size: 18px;
 }
 
 /* ---- Floating Words Glass Style ---- */

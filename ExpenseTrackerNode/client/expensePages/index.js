@@ -140,6 +140,8 @@ leaderboardBtn.addEventListener("click", async () => {
 
 const premiumWelconeSpan = document.getElementById("premium-span");
 const leaderBoardDiv = document.getElementById("leaderBoard-div");
+const downloadBtn = document.getElementById("download-Btn");
+
 async function hideAndDisplayPremium() {
   try {
     const userData = await axios.get(`${UserProfile}/profile`, {
@@ -151,6 +153,7 @@ async function hideAndDisplayPremium() {
     if (paymentStatus) {
       leaderboardBtn.style.display = "inline-block";
       leaderBoardDiv.style.display = "inline-block";
+      downloadBtn.style.display = "inline-block";
       premiumWelconeSpan.innerText = "You are now premium user";
       premiumWelconeSpan.style.display = "inline-block";
     } else {
@@ -161,3 +164,24 @@ async function hideAndDisplayPremium() {
   }
 }
 hideAndDisplayPremium();
+
+// Download Summary
+downloadBtn.addEventListener("click", async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/user/download", {
+      headers: { Authorization: token },
+    });
+    if (response.status === 201) {
+      //the bcakend is essentially sending a download link
+      //  which if we open in browser, the file would download
+      var a = document.createElement("a");
+      a.href = response.data.fileUrl;
+      a.download = "myexpense.csv";
+      a.click();
+    } else {
+      throw new Error(response.data.message);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+});
