@@ -1,6 +1,12 @@
 const forgetPasswordRoutes = require("express").Router();
-const forgetPassword = require("../Controller/forgetEmailController");
+const {
+  forgetPassword,
+  resetPassword,
+  updatePassword,
+} = require("../Controller/forgetEmailController");
 
 forgetPasswordRoutes.post("/forgotpassword", forgetPassword);
+forgetPasswordRoutes.get("/resetpassword/:uuid", resetPassword);
+forgetPasswordRoutes.post("/updatepassword", updatePassword);
 
 module.exports = forgetPasswordRoutes;
