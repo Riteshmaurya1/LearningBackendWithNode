@@ -1,4 +1,4 @@
-const { fn, col } = require("sequelize");
+const { fn, col, Op } = require("sequelize");
 const Expense = require("../Model/expense");
 const User = require("../Model/user");
 const makeCategory = require("../Config/gemini-category");
@@ -129,14 +129,45 @@ const deleteExpense = async (req, res) => {
 const allExpenses = async (req, res) => {
   const userId = req.payload.id;
   try {
-    const expenseList = await Expense.findAll({ where: { userId } });
-    if (!expenseList) {
-      return res.status(404).json({
-        message: "Not Found.",
-      });
-    }
+    // For the pagination query from client.
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+
+    // Count total records
+    const totalItems = await Expense.count({
+      where: {
+        userId,
+        id: {
+          [Op.gt]: 0,
+        },
+      },
+    });
+
+    // Fetch limited data for current page
+    const expenseList = await Expense.findAll({
+      where: { userId },
+      limit,
+      offset,
+      order: [["createdAt", "DESC"]],
+    });
+
+    // Calculate pagination metadata for nextPage and prevPage
+    const totalPages = Math.ceil(totalItems / limit);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
+
+    // Send response
     return res.status(200).json({
-      expenseList,
+      totalItems,
+      totalPages,
+      currentPage: page,
+      perPage: limit,
+      hasPrevPage,
+      hasNextPage,
+      prevPage: hasPrevPage ? page - 1 : null,
+      nextPage: hasNextPage ? page + 1 : null,
+      expenses: expenseList,
     });
   } catch (error) {
     return res.status(500).json({

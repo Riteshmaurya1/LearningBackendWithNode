@@ -75,6 +75,41 @@
   font-size: 18px;
 }
 
+/* ---- Pagination Buttons ---- */
+.pagination-btns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.arrow-btn {
+  background: black;
+  color: white;
+  border: none;
+  width: 60px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.arrow-btn:hover {
+  background: #111;
+  transform: scale(1.1);
+}
+
+.arrow-btn:disabled {
+  background: #777;
+  cursor: not-allowed;
+  transform: none;
+}
+
 /* ---- Floating Words Glass Style ---- */
 .floating-words span {
   position: absolute;

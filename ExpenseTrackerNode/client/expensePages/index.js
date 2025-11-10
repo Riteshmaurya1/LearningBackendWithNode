@@ -9,17 +9,21 @@ if (!token) {
   window.location.href = "../signUp/signup.html";
 }
 
-// Display a single expense item
-function display(expenseData) {
-  console.log(expenseData);
+// Offset & LIMIT for the pagination in DB
+let currentPage = 1;
+const limit = 3;
+const ul = document.querySelector("ul");
+function display(expense) {
+  console.log(expense);
 
-  const ul = document.querySelector("ul");
   const li = document.createElement("li");
 
-  if (expenseData.id) li.dataset.id = expenseData.id;
+  li.dataset.id = expense.id;
 
   const span = document.createElement("span");
-  span.textContent = `${expenseData.amount} - ${expenseData.description} - ${expenseData.category}`;
+  span.textContent = `
+  ${expense.amount} - ${expense.description} - ${expense.category}
+  `;
   li.appendChild(span);
 
   const deleteBtn = document.createElement("button");
@@ -34,7 +38,7 @@ function display(expenseData) {
   deleteBtn.addEventListener("click", async () => {
     try {
       const response = await axios.delete(
-        `${GlobalLink}/delete/${expenseData.id}`,
+        `${GlobalLink}/delete/${expense.id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -80,17 +84,44 @@ async function handleExpense(event) {
 }
 
 // Load expenses on page load
-window.addEventListener("DOMContentLoaded", async () => {
+async function loadExpenses(page = 1) {
   try {
-    const res = await axios.get(`${GlobalLink}/all`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    res.data.expenseList.forEach(display);
+    ul.innerHTML = "";
+    const res = await axios.get(
+      `${GlobalLink}/all?page=${page}&limit=${limit}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    // Display the data for the current page.
+    res.data.expenses.forEach(display);
+
+    // update pagination buttons
+    document.getElementById("prevBtn").disabled = !res.data.hasPrevPage;
+    document.getElementById("nextBtn").disabled = !res.data.hasNextPage;
+
+    // Update the current page.
+    currentPage = res.data.currentPage;
   } catch (error) {
     console.error(error);
     alert("Failed to load expenses.");
   }
+}
+
+// Handle pagination clicks
+document.getElementById("prevBtn").addEventListener("click", () => {
+  if (currentPage > 1) loadExpenses(currentPage - 1);
 });
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  loadExpenses(currentPage + 1);
+});
+
+// Initial load of fetching expnses.
+window.addEventListener("DOMContentLoaded", () => loadExpenses());
+
+// ############################# Payment Buttton ##########################
 
 // Payment Btn for getting premium subscription.
 const premiumBtn = document.getElementById("premiumBtn");
@@ -117,26 +148,34 @@ premiumBtn.addEventListener("click", async () => {
   }
 });
 
-// Leaderboard of premium feature functionality
-const leaderboardBtn = document.getElementById("leaderboardBtn");
-leaderboardBtn.addEventListener("click", async () => {
-  try {
-    const res = await axios.get(`${PremiumFeatureLink}/leaderboard`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+// ############################# LeaderBord Buttton ##########################
 
-    const ul = document.getElementById("leaderBoard");
-    ul.innerHTML = "";
-    res.data.data.forEach((item) => {
-      const li = document.createElement("li");
-      li.textContent = `${item.username} - ₹${item.TotalExpenses}`;
-      ul.appendChild(li);
-    });
-  } catch (error) {
-    console.error(error);
-    alert("Error loading leaderboard.");
-  }
-});
+// Leaderboard of premium feature functionality
+function loadLeaderBoard() {
+  const leaderboardBtn = document.getElementById("leaderboardBtn");
+  leaderboardBtn.addEventListener("click", async () => {
+    try {
+      const res = await axios.get(`${PremiumFeatureLink}/leaderboard`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const ul = document.getElementById("leaderBoard");
+      ul.innerHTML = "";
+      res.data.data.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = `${item.username} - ₹${item.TotalExpenses}`;
+        ul.appendChild(li);
+      });
+    } catch (error) {
+      console.error(error);
+      alert("Error loading leaderboard.");
+    }
+  });
+}
+
+window.addEventListener("DOMContentLoaded", () => loadLeaderBoard());
+
+// ############################# LeaderBord Buttton hide and Display ##########################
 
 const premiumWelconeSpan = document.getElementById("premium-span");
 const leaderBoardDiv = document.getElementById("leaderBoard-div");
