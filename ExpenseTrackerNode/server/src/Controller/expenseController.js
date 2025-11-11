@@ -131,7 +131,7 @@ const allExpenses = async (req, res) => {
   try {
     // For the pagination query from client.
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10;
+    const limit = parseInt(req.query.limit) || 5;
     const offset = (page - 1) * limit;
 
     // Count total records

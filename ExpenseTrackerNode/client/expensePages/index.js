@@ -10,8 +10,24 @@ if (!token) {
 }
 
 // Offset & LIMIT for the pagination in DB
+const limitInput = document.getElementById("expenses-limit");
+limitInput.style.width = "50px";
+
+// Ensure default values and correct parsing
 let currentPage = 1;
-const limit = 3;
+let page = currentPage;
+let limit = parseInt(limitInput.value) || 5; // fallback default to 5
+
+// Load initial expenses
+loadExpenses(page, limit);
+
+// Reload when user changes limit
+limitInput.addEventListener("change", () => {
+  limit = parseInt(limitInput.value) || 5;
+  page = 1; // reset to first page when limit changes
+  loadExpenses(page, limit);
+});
+
 const ul = document.querySelector("ul");
 function display(expense) {
   console.log(expense);
@@ -46,6 +62,7 @@ function display(expense) {
       if (response.status === 200) {
         alert("Expense deleted successfully.");
         li.remove();
+        loadExpenses(1);
       } else {
         alert("Failed to delete expense.");
       }
@@ -70,6 +87,7 @@ async function handleExpense(event) {
     const response = await axios.post(`${GlobalLink}/add`, data, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    loadExpenses(currentPage, limit);
     if (response.status === 200 || response.status === 201) {
       alert("Expense added successfully.");
       display(response.data.newExpense || data);
