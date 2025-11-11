@@ -30,8 +30,7 @@ limitInput.addEventListener("change", () => {
 
 const ul = document.querySelector("ul");
 function display(expense) {
-  console.log(expense);
-
+  
   const li = document.createElement("li");
 
   li.dataset.id = expense.id;
@@ -125,7 +124,6 @@ async function loadExpenses(page = 1) {
     currentPage = res.data.currentPage;
   } catch (error) {
     console.error(error);
-    alert("Failed to load expenses.");
   }
 }
 

@@ -1,12 +1,12 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-
-const db = require("./src/Config/db-connection");
-const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
-// require Models for the associations
+const PORT = process.env.PORT;
+const db = require("./src/Config/db-connection");
+
 const User = require("./src/Model/user");
 const Expense = require("./src/Model/expense");
 const ForgotPasswordRequests = require("./src/Model/forgetPassword");
@@ -16,8 +16,6 @@ const expenseRouter = require("./src/Routes/expenseRoutes");
 const paymentRouter = require("./src/Routes/paymentRoutes");
 const premiumRouter = require("./src/Routes/premiumFeatureRoutes");
 const forgetPasswordRouter = require("./src/Routes/forgetPasswordRoutes");
-
-const PORT = process.env.PORT;
 
 // require Models
 require("./src/Model/user");
@@ -49,9 +47,10 @@ app.use("/payment", paymentRouter);
 app.use("/premium", premiumRouter);
 app.use("/password", forgetPasswordRouter);
 
+//
 (async () => {
   try {
-    await db.sync({ force: false });
+    await db.sync();
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
