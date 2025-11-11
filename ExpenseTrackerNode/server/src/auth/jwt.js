@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const jwtAuth = (req, res, next) => {
   // first we check the authorization
   const authorization = req.headers.authorization;
-  console.log(authorization);
 
   if (!authorization) {
     return res.status(401).json({
@@ -13,7 +12,6 @@ const jwtAuth = (req, res, next) => {
   // Extarct the token from the authorization header.
   const token = req.headers.authorization.split(" ")[1];
   if (!token) {
-    D;
     return res.status(401).json({
       error: "Unauthorized",
     });

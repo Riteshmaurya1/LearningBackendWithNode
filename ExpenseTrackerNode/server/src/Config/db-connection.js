@@ -8,8 +8,8 @@ const host = process.env.DATABASE_HOST;
 const sequelize = new Sequelize(database, user, password, {
   host: host,
   dialect: "mysql",
-  // logging: false,
-  logging: (msg) => console.log(`[SQL]: ${msg}`),
+  logging: false,
+  // logging: (msg) => console.log(`[SQL]: ${msg}`),
 });
 
 (async () => {

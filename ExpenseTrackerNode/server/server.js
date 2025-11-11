@@ -1,8 +1,12 @@
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const compression = require("compression");
+const morgan = require("morgan");
+const path = require("path");
+const fs = require("fs");
 
 const PORT = process.env.PORT;
 const db = require("./src/Config/db-connection");
@@ -30,11 +34,19 @@ Expense.belongsTo(User);
 User.hasMany(ForgotPasswordRequests);
 ForgotPasswordRequests.belongsTo(User);
 
+// create log stream.
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
+
 // Middleware for parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
+app.use(compression());
+app.use(morgan("combined", { stream: accessLogStream }));
 
 app.get("/", (req, res) => {
   res.send("Home Page");
