@@ -46,7 +46,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 app.use(compression());
-app.use(morgan("combined", { stream: accessLogStream }));
+app.use(
+  morgan("combined", {
+    stream: accessLogStream,
+    skip: (req, res) => res.statusCode < 400,
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Home Page");
