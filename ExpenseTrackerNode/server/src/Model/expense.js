@@ -20,6 +20,10 @@ const Expense = sequelize.define("expense", {
     type: DataTypes.ENUM("fuel", "food", "electricity", "movie", "travel"),
     allowNull: false,
   },
+  note: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 module.exports = Expense;

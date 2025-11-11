@@ -38,7 +38,7 @@ function display(expense) {
 
   const span = document.createElement("span");
   span.textContent = `
-  ${expense.amount} - ${expense.description} - ${expense.category}
+  ${expense.amount} - ${expense.description} - ${expense.category} - ${expense.note}
   `;
   li.appendChild(span);
 
@@ -79,9 +79,10 @@ async function handleExpense(event) {
 
   const expenseAmount = event.target.expenseamount.value.trim();
   const description = event.target.description.value.trim();
+  const note = event.target.note.value.trim();
   const category = event.target.category.value.trim();
 
-  const data = { amount: expenseAmount, description, category };
+  const data = { amount: expenseAmount, description, note, category };
 
   try {
     const response = await axios.post(`${GlobalLink}/add`, data, {
@@ -90,7 +91,8 @@ async function handleExpense(event) {
     loadExpenses(currentPage, limit);
     if (response.status === 200 || response.status === 201) {
       alert("Expense added successfully.");
-      display(response.data.newExpense || data);
+      // I decebale it becouse it is renders two times.
+      // display(response.data.newExpense || data);
     } else {
       alert("Expense not added.");
     }

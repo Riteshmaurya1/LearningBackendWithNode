@@ -11,8 +11,8 @@ const addExpense = async (req, res) => {
 
     const userId = req.payload.id;
 
-    const { amount, description, category } = req.body;
-    if (!amount || !description) {
+    const { amount, description, category, note } = req.body;
+    if (!amount || !description || !note) {
       return res.status(401).json({
         message: "Provide all feilds.",
       });
@@ -37,6 +37,7 @@ const addExpense = async (req, res) => {
         description,
         category: finalCategory,
         userId,
+        note,
       },
       { transaction: t }
     );
