@@ -1,9 +1,15 @@
 const { Sequelize } = require("sequelize");
+require("dotenv").config();
 
-const sequelize = new Sequelize("studentattendance", "root", "Mysql@123", {
-  host: "localhost",
-  dialect: "mysql",
-});
+const sequelize = new Sequelize(
+  process.env.DB_NAME || "studentattendance",
+  process.env.DB_USER || "root",
+  process.env.DB_PASSWORD || "Mysql@123",
+  {
+    host: process.env.DB_HOST || "localhost",
+    dialect: "mysql",
+  }
+);
 
 (async () => {
   try {
