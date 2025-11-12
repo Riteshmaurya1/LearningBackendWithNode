@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:3000/student/attendance";
+const API_BASE = "https://attendance-backend-zwx1.onrender.com/student/attendance";
 
 // Elements
 const attDate = document.getElementById("attDate");
