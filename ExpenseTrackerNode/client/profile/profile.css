@@ -1,0 +1,211 @@
+/* ---- Background ---- */
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+  background-attachment: fixed;
+  /* overflow: hidden; */
+}
+
+/* Header Badge - Top Right Corner */
+header {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.badge {
+  display: inline-block;
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.337);
+  backdrop-filter: blur(10px);
+  border: 2px solid #e74c3c;
+  border-radius: 20px;
+  color: #e74c3c;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+}
+
+.badge.premium {
+  border-color: #27ae60;
+  color: #27ae60;
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.2);
+}
+
+/* Profile Container */
+.profile-container {
+  max-width: 500px;
+  margin: 80px auto 40px;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  text-align: center;
+}
+
+/* Profile Avatar - Circle with Initials */
+.avatar {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, #fbc2eb, #a18cd1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  font-weight: 700;
+  color: white;
+  text-transform: uppercase;
+}
+
+/* Profile Details */
+.details {
+  margin: 20px 0;
+}
+
+.details .info-item {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 12px 20px;
+  margin: 10px 0;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.details label {
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.details span {
+  font-size: 15px;
+  color: #333;
+  font-weight: 600;
+}
+
+/* Premium Features Section */
+.premium-section {
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  position: relative;
+}
+
+/* Blur Effect for Locked Features */
+.premium-section.locked {
+  filter: blur(2px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.feature-item {
+  background: rgba(255, 255, 255, 0.6);
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  text-align: left;
+}
+
+/* ---- Floating Words Glass Style ---- */
+.floating-words span {
+  position: absolute;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  padding: 6px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+  animation: float 8s infinite ease-in-out;
+  user-select: none;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+.floating-words span:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+/* ---- Random Placement + Colors ---- */
+.floating-words span:nth-child(1) {
+  top: 10%;
+  left: 15%;
+  background: rgba(255, 99, 99, 0.25);
+  border: 2px solid rgba(255, 99, 99, 0.4);
+  animation-delay: 0s;
+}
+.floating-words span:nth-child(2) {
+  top: 30%;
+  left: 80%;
+  background: rgba(99, 255, 137, 0.25);
+  border: 2px solid rgba(99, 255, 137, 0.4);
+  animation-delay: 1s;
+}
+.floating-words span:nth-child(3) {
+  top: 60%;
+  left: 10%;
+  background: rgba(255, 221, 99, 0.25);
+  border: 2px solid rgba(255, 221, 99, 0.4);
+  animation-delay: 2s;
+}
+.floating-words span:nth-child(4) {
+  top: 85%;
+  left: 70%;
+  background: rgba(99, 175, 255, 0.25);
+  border: 2px solid rgba(99, 175, 255, 0.4);
+  animation-delay: 3s;
+}
+.floating-words span:nth-child(5) {
+  top: 5%;
+  left: 60%;
+  background: rgba(255, 140, 99, 0.25);
+  border: 2px solid rgba(255, 140, 99, 0.4);
+  animation-delay: 4s;
+}
+.floating-words span:nth-child(6) {
+  top: 45%;
+  left: 25%;
+  background: rgba(171, 99, 255, 0.25);
+  border: 2px solid rgba(171, 99, 255, 0.4);
+  animation-delay: 5s;
+}
+.floating-words span:nth-child(7) {
+  top: 70%;
+  left: 50%;
+  background: rgba(99, 255, 234, 0.25);
+  border: 2px solid rgba(99, 255, 234, 0.4);
+  animation-delay: 6s;
+}
+.floating-words span:nth-child(8) {
+  top: 90%;
+  left: 35%;
+  background: rgba(255, 180, 99, 0.25);
+  border: 2px solid rgba(255, 180, 99, 0.4);
+  animation-delay: 7s;
+}
+
+/* ---- Floating Animation ---- */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-10px) scale(1.05);
+    opacity: 1;
+  }
+}

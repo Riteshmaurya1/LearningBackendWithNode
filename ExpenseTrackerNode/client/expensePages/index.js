@@ -30,7 +30,6 @@ limitInput.addEventListener("change", () => {
 
 const ul = document.querySelector("ul");
 function display(expense) {
-  
   const li = document.createElement("li");
 
   li.dataset.id = expense.id;
@@ -90,8 +89,8 @@ async function handleExpense(event) {
     loadExpenses(currentPage, limit);
     if (response.status === 200 || response.status === 201) {
       alert("Expense added successfully.");
-      // I decebale it becouse it is renders two times.
-      // display(response.data.newExpense || data);
+      // I desebale it becouse it is renders two times.
+      display(response.data.newExpense || data);
     } else {
       alert("Expense not added.");
     }
@@ -204,8 +203,8 @@ async function hideAndDisplayPremium() {
     const userData = await axios.get(`${UserProfile}/profile`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+
     const paymentStatus = userData?.data?.data?.isPremium;
-    console.log(paymentStatus);
 
     if (paymentStatus) {
       leaderboardBtn.style.display = "inline-block";
@@ -241,4 +240,10 @@ downloadBtn.addEventListener("click", async () => {
   } catch (error) {
     console.log(error);
   }
+});
+
+// ---------------- Profile page redirecting logic. ------------//
+const profileBtn = document.getElementById("userProfile-Btn");
+profileBtn.addEventListener("click", () => {
+  window.location.href = "../profile/profile.html";
 });
