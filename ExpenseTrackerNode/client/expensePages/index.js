@@ -14,7 +14,8 @@ const limitInput = document.getElementById("expenses-limit");
 limitInput.style.width = "50px";
 
 // Ensure default values and correct parsing
-let currentPage = 1;
+let currentPage;
+var previousPage = 0;
 let page = currentPage;
 let limit = parseInt(limitInput.value) || 5; // fallback default to 5
 
@@ -60,7 +61,7 @@ function display(expense) {
       if (response.status === 200) {
         alert("Expense deleted successfully.");
         li.remove();
-        loadExpenses(1);
+        loadExpenses(previousPage);
       } else {
         alert("Failed to delete expense.");
       }
@@ -89,8 +90,6 @@ async function handleExpense(event) {
     loadExpenses(currentPage, limit);
     if (response.status === 200 || response.status === 201) {
       alert("Expense added successfully.");
-      // I desebale it becouse it is renders two times.
-      display(response.data.newExpense || data);
     } else {
       alert("Expense not added.");
     }
@@ -121,6 +120,7 @@ async function loadExpenses(page = 1) {
 
     // Update the current page.
     currentPage = res.data.currentPage;
+    previousPage = res.data.prevPage;
   } catch (error) {
     console.error(error);
   }
