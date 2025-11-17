@@ -30,6 +30,21 @@ header {
   text-transform: uppercase;
   letter-spacing: 1px;
   box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
+  cursor: pointer;
+}
+.logout {
+  display: inline-block;
+  padding: 8px 20px;
+  background: black;
+  border: 2px solid #111111;
+  border-radius: 20px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .badge.premium {
